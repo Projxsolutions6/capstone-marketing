@@ -33,6 +33,8 @@ const NAV_LINKS = [
   { id: 'feedback', label: 'Feedback' },
 ];
 
+
+
 /* ─────────────────────────── HELPERS ─────────────────────────── */
 function scrollTo(id) {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
@@ -54,14 +56,22 @@ function useVisible(ref) {
 function FadeIn({ children, delay = 0, className = '' }) {
   const ref = useRef();
   const vis = useVisible(ref);
+
   return (
     <div
       ref={ref}
       className={className}
       style={{
         opacity: vis ? 1 : 0,
-        transform: vis ? 'translateY(0)' : 'translateY(32px)',
-        transition: `opacity 0.7s ease ${delay}s, transform 0.7s ease ${delay}s`,
+        transform: vis
+          ? 'translateY(0) scale(1)'
+          : 'translateY(40px) scale(0.98)',
+        filter: vis ? 'blur(0px)' : 'blur(6px)',
+        transition: `
+          opacity 0.7s ease ${delay}s,
+          transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) ${delay}s,
+          filter 0.7s ease ${delay}s
+        `,
       }}
     >
       {children}
@@ -84,8 +94,8 @@ function Navbar() {
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="nav-inner">
         <button className="nav-logo" onClick={() => scrollTo('home')}>
-          <span className="logo-shield">⬡</span>
-          <span className="logo-text">Veil<em>Veil</em></span>
+          <img src="/veil_logo.png" alt="Veil Logo" className="logo-img" loading="eager" />
+          <span className="logo-text">Veil</span>
         </button>
 
         <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
@@ -116,6 +126,7 @@ function Hero() {
         <div className="orb orb2" />
       </div>
       <div className="hero-content">
+        <img src="/veil_logo.png" alt="Veil Logo" className="hero-logo" />
         <div className="hero-badge">Social Media Anonymity </div>
         <h1 className="hero-title">
           Privacy,<br />
@@ -126,6 +137,10 @@ function Hero() {
           Veil lets you participate in social platforms, forums, and communities
           without exposing your real identity — secure, seamless, and open to all.
         </p>
+
+        <p className="hero-trust">
+          Trusted by privacy-focused users worldwide
+          </p>
         <div className="hero-actions">
           <button className="btn-primary" onClick={() => scrollTo('about')}>
             Discover Veil
@@ -145,6 +160,220 @@ function Hero() {
       <div className="hero-scroll-hint" onClick={() => scrollTo('about')}>
         <span>Scroll</span>
         <div className="scroll-arrow">↓</div>
+      </div>
+    </section>
+  );
+}
+
+function Showcase() {
+  useEffect(() => {
+  const phone = document.querySelector('.phone-frame');
+
+  const handleScroll = () => {
+    const rect = phone?.getBoundingClientRect();
+    if (!rect) return;
+
+    const windowHeight = window.innerHeight;
+
+    // progress (0 → 1)
+    const progress = 1 - Math.min(Math.max(rect.top / windowHeight, 0), 1);
+
+    const rotateX = 8 - progress * 8;
+    const rotateY = -10 + progress * 10;
+    const scale = 0.9 + progress * 0.15;
+
+    phone.style.transform = `
+      rotateX(${rotateX}deg)
+      rotateY(${rotateY}deg)
+      scale(${scale})
+    `;
+
+    // glow intensity
+    phone.style.boxShadow = `
+      0 60px 160px rgba(0,0,0,0.8),
+      0 0 ${40 + progress * 60}px rgba(123,97,255,0.3)
+    `;
+  };
+
+  window.addEventListener('scroll', handleScroll);
+  handleScroll();
+
+  return () => window.removeEventListener('scroll', handleScroll);
+}, []);
+
+useEffect(() => {
+  const createSlider = (selector) => {
+    const screens = document.querySelectorAll(selector);
+
+    let index = 0;
+
+    setInterval(() => {
+      screens.forEach((screen) => {
+        screen.classList.remove('active');
+      });
+
+      screens[index].classList.add('active');
+
+      index = (index + 1) % screens.length;
+    }, 4000);
+  };
+
+  createSlider('.p1');
+  createSlider('.p2');
+  createSlider('.p3');
+}, []);
+  return (
+    <section className="showcase">
+      <div className="container">
+
+        {/* Headline */}
+        <FadeIn>
+          <p className="section-eyebrow light">Experience Veil</p>
+          <h2 className="section-title light">
+            Privacy, in Motion.
+          </h2>
+          <p className="section-lead light">
+            See how Veil lets you interact freely — without ever revealing who you are.
+          </p>
+        </FadeIn>
+
+        {/* Phone */}
+        <div className="phone-showcase multi-phone-showcase">
+
+  {/* PHONE 1 */}
+  <div className="phone-frame">
+    <div className="phone-screen-wrapper">
+
+      <div className="phone-screen p1 active">
+        <img
+          src="/screenshot-1.png"
+          alt="Feed"
+          className="phone-image"
+        />
+        <div className="screen-label">Feed</div>
+      </div>
+
+      <div className="phone-screen p1">
+        <img
+          src="/screenshot-2.png"
+          alt="Chat"
+          className="phone-image"
+        />
+        <div className="screen-label">Chat</div>
+      </div>
+
+      <div className="phone-screen p1">
+        <img
+          src="/screenshot-3.png"
+          alt="Settings"
+          className="phone-image"
+        />
+        <div className="screen-label">Settings</div>
+      </div>
+
+    </div>
+  </div>
+
+  {/* PHONE 2 */}
+  <div className="phone-frame middle-phone">
+    <div className="phone-screen-wrapper">
+
+      <div className="phone-screen p2 active">
+        <img
+          src="/screenshot-4.png"
+          alt="Chat"
+          className="phone-image"
+        />
+        <div className="screen-label">Anonymous Feed</div>
+      </div>
+
+      <div className="phone-screen p2">
+        <img
+          src="/screenshot-5.png"
+          alt="Settings"
+          className="phone-image"
+        />
+        <div className="screen-label">Anonymous Posting</div>
+      </div>
+
+      <div className="phone-screen p2">
+        <img
+          src="/screenshot-6.png"
+          alt="Feed"
+          className="phone-image"
+        />
+        <div className="screen-label">Anonymous Interactions</div>
+      </div>
+
+    </div>
+  </div>
+
+  {/* PHONE 3 */}
+  <div className="phone-frame">
+    <div className="phone-screen-wrapper">
+
+      <div className="phone-screen p3 active">
+        <img
+          src="/screenshot-9.png"
+          alt="Settings"
+          className="phone-image"
+        />
+        <div className="screen-label">Profile</div>
+      </div>
+
+      <div className="phone-screen p3">
+        <img
+          src="/screenshot-7.png"
+          alt="Feed"
+          className="phone-image"
+        />
+        <div className="screen-label">Your Profile</div>
+      </div>
+
+            <div className="phone-screen p3">
+        <img
+          src="/screenshot-8.png"
+          alt="Chat"
+          className="phone-image"
+        />
+        <div className="screen-label">Edit Profile</div>
+      </div>
+
+    </div>
+  </div>
+        </div>
+
+        {/* Story Blocks */}
+        <div className="showcase-features">
+          <FadeIn delay={0.5}>
+            <div className="showcase-item">
+              <h3>Share and Control your moment</h3>
+              <p>Share you moments and share with friends and family</p>
+            </div>
+          </FadeIn>
+
+          <FadeIn delay={0.5}>
+            <div className="showcase-item">
+              <h3>Your Secret is Safe</h3>
+              <p>Your identity is never exposed post, comment and browse anonymously, your secret is safe with us</p>
+            </div>
+          </FadeIn>
+
+          <FadeIn delay={0.5}>
+            <div className="showcase-item">
+              <h3>Full Control</h3>
+              <p>Your Identity make it how you want with our state of the art interface</p>
+            </div>
+          </FadeIn>
+        </div>
+
+        {/* CTA */}
+        <FadeIn delay={0.4}>
+          <div className="showcase-cta">
+            <button className="btn-primary">Join the Future</button>
+          </div>
+        </FadeIn>
+
       </div>
     </section>
   );
@@ -232,7 +461,7 @@ function WhyUseIt() {
   ];
 
   return (
-    <section id="why-use-it" className="section section-light">
+    <section id="why-use-it" className="section section-dark why-section">
       <div className="container">
         <FadeIn>
           <p className="section-eyebrow">Why Veil?</p>
@@ -318,6 +547,23 @@ function Market() {
 
 /* ─────────────────────────── SIDEBAR / FEEDBACK ─────────────────────────── */
 function Feedback() {
+  useEffect(() => {
+  const slides = document.querySelectorAll('.demo-slide');
+
+  let index = 0;
+
+  const interval = setInterval(() => {
+    slides.forEach((slide) => {
+      slide.classList.remove('active-demo');
+    });
+
+    slides[index].classList.add('active-demo');
+
+    index = (index + 1) % slides.length;
+  }, 4000);
+
+  return () => clearInterval(interval);
+}, []);
   return (
     <section id="feedback" className="section section-light">
       <div className="container">
@@ -333,19 +579,49 @@ function Feedback() {
             <FadeIn>
               <div className="embed-card">
                 <div className="embed-label">🎥 Demo Video</div>
-                <div className="video-wrapper">
-                  {/* Replace src with your Google Drive iframe preview link */}
-                  <iframe
-                    src="https://drive.google.com/file/d/YOUR_FILE_ID/preview"
-                    title="Veil Demo Video"
-                    allow="autoplay"
-                    allowFullScreen
-                  />
-                  <div className="video-placeholder">
-                    <div className="play-icon">▶</div>
-                    <p>Replace the iframe <code>src</code> with your Google Drive video preview link.</p>
+                <div className="demo-phone-wrapper">
+
+                <div className="phone-frame demo-phone-frame">
+
+                  <div className="demo-video-showcase">
+
+                    <div className="demo-slide active-demo">
+                      <img
+                        src="/screenshot-1.png"
+                        alt="Veil Feed"
+                        className="demo-image"
+                      />
+                    </div>
+
+                    <div className="demo-slide">
+                      <img
+                        src="/screenshot-2.png"
+                        alt="Veil Chat"
+                        className="demo-image"
+                      />
+                    </div>
+
+                    <div className="demo-slide">
+                      <img
+                        src="/screenshot-3.png"
+                        alt="Veil Settings"
+                        className="demo-image"
+                      />
+                    </div>
+
+                    <div className="fake-video-overlay">
+                      <button className="fake-play-btn">▶</button>
+
+                      <div className="demo-caption">
+                        Veil Product Preview
+                      </div>
+                    </div>
+
                   </div>
+
                 </div>
+
+              </div>
               </div>
             </FadeIn>
 
@@ -416,8 +692,8 @@ function Footer() {
     <footer className="footer">
       <div className="container footer-inner">
         <div className="footer-brand">
-          <span className="logo-shield">⬡</span>
-          <span className="logo-text">Veil<em>Veil</em></span>
+          <img src="/veil_logo.png" alt="Veil Logo" className="logo-img" />
+          <span className="logo-text">Veil</span>
         </div>
         <p className="footer-tagline">Privacy, Simplified for Everyone.</p>
         <div className="footer-links">
@@ -433,6 +709,90 @@ function Footer() {
 
 /* ─────────────────────────── APP ─────────────────────────── */
 export default function App() {
+
+  useEffect(() => {
+  let mouseX = 0;
+  let mouseY = 0;
+  let rafId;
+
+  const update = () => {
+    // Update CSS variables (for glow)
+    document.body.style.setProperty('--x', `${mouseX}px`);
+    document.body.style.setProperty('--y', `${mouseY}px`);
+
+    // Parallax
+    const x = (mouseX / window.innerWidth - 0.5) * 12;
+    const y = (mouseY / window.innerHeight - 0.5) * 12;
+
+    const hero = document.querySelector('.hero');
+    if (hero) {
+      hero.style.transform = `translate(${x}px, ${y}px)`;
+    }
+
+    rafId = requestAnimationFrame(update);
+  };
+
+  const handleMove = (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  };
+
+  window.addEventListener('mousemove', handleMove);
+  rafId = requestAnimationFrame(update);
+
+  return () => {
+    window.removeEventListener('mousemove', handleMove);
+    cancelAnimationFrame(rafId);
+  };
+}, []);
+
+
+  /* 🔥 Card Tilt Effect */
+  useEffect(() => {
+  const cards = document.querySelectorAll('.card');
+
+  cards.forEach(card => {
+    let rafId;
+
+    const handleMove = (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      const rotateX = -(y - centerY) / 14;
+      const rotateY = (x - centerX) / 14;
+
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        card.style.transform =
+          `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.03)`;
+      });
+    };
+
+    const reset = () => {
+      card.style.transform = `rotateX(0deg) rotateY(0deg) scale(1)`;
+    };
+
+    card.addEventListener('mousemove', handleMove);
+    card.addEventListener('mouseleave', reset);
+
+    card._cleanup = () => {
+      card.removeEventListener('mousemove', handleMove);
+      card.removeEventListener('mouseleave', reset);
+    };
+  });
+
+  return () => {
+    cards.forEach(card => card._cleanup && card._cleanup());
+  };
+}, []);
+
+
+  
+
   return (
     <>
       <Navbar />
@@ -441,6 +801,7 @@ export default function App() {
       <HowItWorks />
       <WhyUseIt />
       <Market />
+      <Showcase />
       <Feedback />
       <Footer />
     </>
