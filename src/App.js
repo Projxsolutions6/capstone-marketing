@@ -215,7 +215,7 @@ function Showcase() {
         <FadeIn>
           <p className="section-eyebrow light">Experience Veil</p>
           <h2 className="section-title light">
-            Privacy, in Motion.
+            Own The Moment.
           </h2>
           <p className="section-lead light">
             See how Veil lets you interact freely — without ever revealing who you are.
