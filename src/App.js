@@ -1,5 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, PieChart, Pie, Legend } from 'recharts';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination,Autoplay } from 'swiper/modules';
+
+import 'swiper/css';
+import 'swiper/css/pagination';
 import './App.css';
 
 /* ─────────────────────────── DATA ─────────────────────────── */
@@ -201,27 +206,7 @@ function Showcase() {
   return () => window.removeEventListener('scroll', handleScroll);
 }, []);
 
-useEffect(() => {
-  const createSlider = (selector) => {
-    const screens = document.querySelectorAll(selector);
 
-    let index = 0;
-
-    setInterval(() => {
-      screens.forEach((screen) => {
-        screen.classList.remove('active');
-      });
-
-      screens[index].classList.add('active');
-
-      index = (index + 1) % screens.length;
-    }, 4000);
-  };
-
-  createSlider('.p1');
-  createSlider('.p2');
-  createSlider('.p3');
-}, []);
   return (
     <section className="showcase">
       <div className="container">
@@ -238,109 +223,187 @@ useEffect(() => {
         </FadeIn>
 
         {/* Phone */}
-        <div className="phone-showcase multi-phone-showcase">
+       <div className="phone-showcase multi-phone-showcase">
 
-  {/* PHONE 1 */}
-  <div className="phone-frame">
-    <div className="phone-screen-wrapper">
+        {/* PHONE 1 */}
+        <div className="phone-frame">
+          <div className="phone-screen-wrapper">
 
-      <div className="phone-screen p1 active">
-        <img
-          src="/screenshot-1.png"
-          alt="Feed"
-          className="phone-image"
-        />
-        <div className="screen-label">Feed</div>
-      </div>
+            <Swiper
+              modules={[Pagination, Autoplay]}
+              pagination={{ clickable: true }}
+              slidesPerView={1}
+              spaceBetween={0}
+              loop={true}
+              autoplay={{
+                delay: 4000,
+                disableOnInteraction: false,
+              }}
+              speed={900}
+              className="phone-swiper"
+            >
 
-      <div className="phone-screen p1">
-        <img
-          src="/screenshot-2.png"
-          alt="Chat"
-          className="phone-image"
-        />
-        <div className="screen-label">Chat</div>
-      </div>
+              <SwiperSlide>
+                <div className="phone-screen">
+                  <img
+                    src="/screenshot-1.png"
+                    alt="Feed"
+                    className="phone-image"
+                  />
+                  <div className="screen-label">Feed</div>
+                </div>
+              </SwiperSlide>
 
-      <div className="phone-screen p1">
-        <img
-          src="/screenshot-3.png"
-          alt="Settings"
-          className="phone-image"
-        />
-        <div className="screen-label">Settings</div>
-      </div>
+              <SwiperSlide>
+                <div className="phone-screen">
+                  <img
+                    src="/screenshot-2.png"
+                    alt="Chat"
+                    className="phone-image"
+                  />
+                  <div className="screen-label">Chat</div>
+                </div>
+              </SwiperSlide>
 
-    </div>
-  </div>
+              <SwiperSlide>
+                <div className="phone-screen">
+                  <img
+                    src="/screenshot-3.png"
+                    alt="Settings"
+                    className="phone-image"
+                  />
+                  <div className="screen-label">Post details</div>
+                </div>
+              </SwiperSlide>
 
-  {/* PHONE 2 */}
-  <div className="phone-frame middle-phone">
-    <div className="phone-screen-wrapper">
+            </Swiper>
 
-      <div className="phone-screen p2 active">
-        <img
-          src="/screenshot-4.png"
-          alt="Chat"
-          className="phone-image"
-        />
-        <div className="screen-label">Anonymous Feed</div>
-      </div>
+          </div>
+        </div>
 
-      <div className="phone-screen p2">
-        <img
-          src="/screenshot-5.png"
-          alt="Settings"
-          className="phone-image"
-        />
-        <div className="screen-label">Anonymous Posting</div>
-      </div>
+        {/* PHONE 2 */}
+        <div className="phone-frame middle-phone">
+          <div className="phone-screen-wrapper">
 
-      <div className="phone-screen p2">
-        <img
-          src="/screenshot-6.png"
-          alt="Feed"
-          className="phone-image"
-        />
-        <div className="screen-label">Anonymous Interactions</div>
-      </div>
+            <Swiper
+              modules={[Pagination, Autoplay]}
+              pagination={{ clickable: true }}
+              slidesPerView={1}
+              spaceBetween={0}
+              loop={true}
+              autoplay={{
+                delay: 4000,
+                disableOnInteraction: false,
+              }}
+              speed={900}
+              className="phone-swiper"
+            >
 
-    </div>
-  </div>
+              <SwiperSlide>
+                <div className="phone-screen">
+                  <img
+                    src="/screenshot-4.png"
+                    alt="Anonymous Feed"
+                    className="phone-image"
+                  />
+                  <div className="screen-label">
+                    Anonymous Feed
+                  </div>
+                </div>
+              </SwiperSlide>
+
+              <SwiperSlide>
+                <div className="phone-screen">
+                  <img
+                    src="/screenshot-5.png"
+                    alt="Anonymous Posting"
+                    className="phone-image"
+                  />
+                  <div className="screen-label">
+                    Anonymous Posting
+                  </div>
+                </div>
+              </SwiperSlide>
+
+              <SwiperSlide>
+                <div className="phone-screen">
+                  <img
+                    src="/screenshot-6.png"
+                    alt="Anonymous Interactions"
+                    className="phone-image"
+                  />
+                  <div className="screen-label">
+                    Anonymous Interactions
+                  </div>
+                </div>
+              </SwiperSlide>
+
+            </Swiper>
+
+          </div>
+        </div>
 
   {/* PHONE 3 */}
   <div className="phone-frame">
     <div className="phone-screen-wrapper">
 
-      <div className="phone-screen p3 active">
-        <img
-          src="/screenshot-9.png"
-          alt="Settings"
-          className="phone-image"
-        />
-        <div className="screen-label">Profile</div>
-      </div>
+      <Swiper
+        modules={[Pagination, Autoplay]}
+        pagination={{ clickable: true }}
+        slidesPerView={1}
+        spaceBetween={0}
+        loop={true}
+        autoplay={{
+          delay: 4000,
+          disableOnInteraction: false,
+        }}
+        speed={900}
+        className="phone-swiper"
+      >
 
-      <div className="phone-screen p3">
-        <img
-          src="/screenshot-7.png"
-          alt="Feed"
-          className="phone-image"
-        />
-        <div className="screen-label">Your Profile</div>
-      </div>
+        <SwiperSlide>
+          <div className="phone-screen">
+            <img
+              src="/screenshot-9.png"
+              alt="Profile"
+              className="phone-image"
+            />
+            <div className="screen-label">
+              Profile
+            </div>
+          </div>
+        </SwiperSlide>
 
-            <div className="phone-screen p3">
-        <img
-          src="/screenshot-8.png"
-          alt="Chat"
-          className="phone-image"
-        />
-        <div className="screen-label">Edit Profile</div>
-      </div>
+        <SwiperSlide>
+          <div className="phone-screen">
+            <img
+              src="/screenshot-7.png"
+              alt="Your Profile"
+              className="phone-image"
+            />
+            <div className="screen-label">
+              Your Profile
+            </div>
+          </div>
+        </SwiperSlide>
+
+        <SwiperSlide>
+          <div className="phone-screen">
+            <img
+              src="/screenshot-8.png"
+              alt="Edit Profile"
+              className="phone-image"
+            />
+            <div className="screen-label">
+              Edit Profile
+            </div>
+          </div>
+        </SwiperSlide>
+
+      </Swiper>
 
     </div>
-  </div>
+</div>
         </div>
 
         {/* Story Blocks */}
@@ -632,13 +695,9 @@ function Feedback() {
                 <div className="form-wrapper">
                   {/* Replace src with your Google Form embed link */}
                   <iframe
-                    src="https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform?embedded=true"
-                    title="Veil Feedback Form"
-                  />
-                  <div className="form-placeholder">
-                    <p>📋 Replace the iframe <code>src</code> with your Google Form embed link.</p>
-                    <p className="placeholder-sub">The form should include Yes/No questions and a 1–10 rating scale.</p>
-                  </div>
+                      src="https://docs.google.com/forms/d/e/1FAIpQLScalvcAV1M3zd2kkXTPqQj9tF1h6S8moFd1CgnwXiPSqRXiTg/viewform?embedded=true"
+                      title="Veil Feedback Form"
+                    />
                 </div>
               </div>
             </FadeIn>
@@ -652,31 +711,53 @@ function Feedback() {
                 <p className="results-note">Sample data shown below. Embed your live Google Sheets chart here.</p>
 
                 <h4 className="chart-sub">Would you use Veil? (n=100)</h4>
-                <ResponsiveContainer width="100%" height={180}>
-                  <PieChart>
-                    <Pie data={yesNoData} dataKey="value" cx="50%" cy="50%" outerRadius={70} label={({ name, value }) => `${value}%`}>
-                      {yesNoData.map((e, i) => <Cell key={i} fill={e.fill} />)}
-                    </Pie>
-                    <Tooltip formatter={(v) => `${v}%`} />
-                    <Legend />
-                  </PieChart>
-                </ResponsiveContainer>
+                <iframe
+                    src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSW-QCZWakurDDPXaHnmqkDMhae8dukp1tTGhSFJ1_mjlrYPcSIz4E_F76bN4gQsOW7roJDlAcfZc0-/pubchart?oid=306847871&format=interactive"
+                    width="100%"
+                    height="250"
+                    frameBorder="0"
+                    scrolling="no"
+                    title="Live Veil Feedback Results"
+                    className="live-chart-frame"
+                  />
 
                 <h4 className="chart-sub" style={{ marginTop: '1.5rem' }}>Privacy Importance Rating (1–10)</h4>
-                <ResponsiveContainer width="100%" height={180}>
-                  <BarChart data={ratingData} barSize={28}>
-                    <XAxis dataKey="label" tick={{ fontSize: 11, fill: '#64748b' }} />
-                    <YAxis tick={{ fontSize: 11, fill: '#64748b' }} />
-                    <Tooltip cursor={{ fill: 'rgba(45,87,168,0.07)' }} />
-                    <Bar dataKey="count" radius={[5, 5, 0, 0]}>
-                      {ratingData.map((e, i) => <Cell key={i} fill={e.fill} />)}
-                    </Bar>
-                  </BarChart>
-                </ResponsiveContainer>
+                <iframe
+                  src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSW-QCZWakurDDPXaHnmqkDMhae8dukp1tTGhSFJ1_mjlrYPcSIz4E_F76bN4gQsOW7roJDlAcfZc0-/pubchart?oid=1621210750&format=interactive"
+                  width="100%"
+                  height="250"
+                  frameBorder="0"
+                  scrolling="no"
+                  title="Privacy Rating Results"
+                  className="live-chart-frame"
+                />
+                <h4 className="chart-sub" style={{ marginTop: '1.5rem' }}>
+                    User Demographics
+                  </h4>
 
-                <div className="live-badge">
-                  🔴 Replace charts above with embedded Google Sheets chart iframes for live data
-                </div>
+                  <iframe
+                    src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSW-QCZWakurDDPXaHnmqkDMhae8dukp1tTGhSFJ1_mjlrYPcSIz4E_F76bN4gQsOW7roJDlAcfZc0-/pubchart?oid=1496740597&format=interactive"
+                    width="100%"
+                    height="250"
+                    frameBorder="0"
+                    scrolling="no"
+                    title="User Demographics"
+                    className="live-chart-frame"
+                  />
+                <h4 className="chart-sub" style={{ marginTop: '1.5rem' }}>
+                  Most Wanted VEIL Features
+                </h4>
+
+                <iframe
+                  src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSW-QCZWakurDDPXaHnmqkDMhae8dukp1tTGhSFJ1_mjlrYPcSIz4E_F76bN4gQsOW7roJDlAcfZc0-/pubchart?oid=77909998&format=interactive"
+                  width="100%"
+                  height="250"
+                  frameBorder="0"
+                  scrolling="no"
+                  title="Most Wanted VEIL Features"
+                  className="live-chart-frame"
+                />
+                
               </div>
             </FadeIn>
           </div>
